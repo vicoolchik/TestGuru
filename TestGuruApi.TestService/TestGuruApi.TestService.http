@@ -1,0 +1,6 @@
+@TestGuruApi.TestService_HostAddress = http://localhost:5159
+
+GET {{TestGuruApi.TestService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
