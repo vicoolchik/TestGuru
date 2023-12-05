@@ -12,6 +12,7 @@ namespace TestGuruApi.TestService.MappingProfiles
             CreateMap<TestRequest, Test>();
             CreateMap<AnswerRequest, Answer>();
             CreateMap<CategoryRequest, Category>();
+            CreateMap<TestCollectionRequest, TestCollection>();
         }
     }
 }
