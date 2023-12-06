@@ -10,7 +10,7 @@ namespace TestGuruApi.Entities.Dto.Requests
         [Required]
         public float Points { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
 
         [Required]
         public Guid TestId { get; set; }

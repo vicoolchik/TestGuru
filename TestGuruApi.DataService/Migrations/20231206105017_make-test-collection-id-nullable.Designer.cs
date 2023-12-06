@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TestGuruApi.DataService.Data;
@@ -11,9 +12,11 @@ using TestGuruApi.DataService.Data;
 namespace TestGuruApi.DataService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231206105017_make-test-collection-id-nullable")]
+    partial class maketestcollectionidnullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +104,7 @@ namespace TestGuruApi.DataService.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Content")
@@ -271,7 +274,9 @@ namespace TestGuruApi.DataService.Migrations
                 {
                     b.HasOne("TestGuruApi.Entities.DbSet.Category", "Category")
                         .WithMany("Questions")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TestGuruApi.Entities.DbSet.Test", "Test")
                         .WithMany("Questions")

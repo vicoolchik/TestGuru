@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TestGuruApi.DataService.Repositories.Interfaces;
 using TestGuruApi.Entities.DbSet;
@@ -11,7 +12,7 @@ namespace TestGuruApi.TestService.Controllers
     [Route("api/[controller]")]
     public class TestController : BaseController
     {
-        public TestController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public TestController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
         {
         }
 

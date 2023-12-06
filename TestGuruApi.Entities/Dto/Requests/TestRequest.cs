@@ -19,5 +19,7 @@ namespace TestGuruApi.Entities.Dto.Requests
         public DateTime? Duration { get; set; }
 
         public int TotalQuestionsCount { get; set; }
+
+        public Guid? TestCollectionId { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace TestGuruApi.Entities.DbSet
         public float Points { get; set; }
 
         // Foreign keys
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         [Required]
         public Guid TestId { get; set; }
 

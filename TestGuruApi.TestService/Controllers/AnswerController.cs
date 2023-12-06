@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TestGuruApi.DataService.Repositories.Interfaces;
-using TestGuruApi.Entities.DbSet;
 using TestGuruApi.Entities.Dto.Requests;
 using TestGuruApi.Entities.Dto.Responses;
+using TestGuruApi.TestService.Commands;
 using TestGuruApi.TestService.Controllers;
+using TestGuruApi.TestService.Queries;
 
 namespace TestGuruApi.Controllers
 {
@@ -12,70 +14,46 @@ namespace TestGuruApi.Controllers
     [Route("api/[controller]")]
     public class AnswerController : BaseController
     {
-        public AnswerController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public AnswerController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
         {
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<AnswerResponse>> GetAnswer(Guid id)
         {
-            var answer = await _unitOfWork.Answers.GetById(id);
-            if (answer == null)
-            {
-                return NotFound();
-            }
-            var answerResponse = _mapper.Map<AnswerResponse>(answer);
-            return Ok(answerResponse);
+            var answer = await _mediator.Send(new GetAnswerByIdQuery(id));
+            return answer != null ? Ok(answer) : NotFound();
         }
 
         [HttpGet("question/{questionId}")]
         public async Task<ActionResult<IEnumerable<AnswerResponse>>> GetAnswersByQuestion(Guid questionId)
         {
-            var answers = await _unitOfWork.Answers.GetAllByQuestionIdAsync(questionId);
+            var answers = await _mediator.Send(new GetAnswersByQuestionQuery(questionId));
             if (answers == null || !answers.Any())
             {
                 return NotFound();
             }
-            var answerResponses = _mapper.Map<IEnumerable<AnswerResponse>>(answers);
-            return Ok(answerResponses);
+            return Ok(answers);
         }
 
         [HttpPost]
         public async Task<ActionResult<AnswerResponse>> CreateAnswer([FromBody] AnswerRequest answerRequest)
         {
-            var answer = _mapper.Map<Answer>(answerRequest);
-            _unitOfWork.Answers.Add(answer);
-            await _unitOfWork.CompleteAsync();
-
-            var answerResponse = _mapper.Map<AnswerResponse>(answer);
-            return CreatedAtAction(nameof(GetAnswer), new { id = answer.Id }, answerResponse);
+            var answerResponse = await _mediator.Send(new CreateAnswerCommand(answerRequest));
+            return CreatedAtAction(nameof(GetAnswer), new { id = answerResponse.Id }, answerResponse);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAnswer(Guid id, [FromBody] AnswerRequest answerRequest)
         {
-            var answer = await _unitOfWork.Answers.GetById(id);
-            if (answer == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(answerRequest, answer);
-            _unitOfWork.Answers.Update(answer);
-            await _unitOfWork.CompleteAsync();
-
+            await _mediator.Send(new UpdateAnswerCommand(id, answerRequest));
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnswer(Guid id)
         {
-            var success = await _unitOfWork.Answers.Delete(id);
-            if (!success)
-            {
-                return NotFound();
-            }
-            await _unitOfWork.CompleteAsync();
+            await _mediator.Send(new DeleteAnswerCommand(id));
             return NoContent();
         }
     }

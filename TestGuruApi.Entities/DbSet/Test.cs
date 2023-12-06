@@ -22,7 +22,7 @@ namespace TestGuruApi.Entities.DbSet
         // Foreign key
         //[Required]
         //public Guid CreatorId { get; set; }
-        public Guid TestCollectionId { get; set; }
+        public Guid? TestCollectionId { get; set; }
 
         // Navigation properties
         public virtual ICollection<Question> Questions { get; set; } = new HashSet<Question>();
