@@ -1,10 +1,7 @@
 ﻿using TestGuruApi.Entities.DbSet;
 
-namespace TestGuruApi.DataService.Repositories.Interfaces
+public interface IQuestionRepository<TQuestion> where TQuestion : Question
 {
-    public interface IQuestionRepository : IGenericRepository<Question>
-    {
-        Task<IEnumerable<Question>> GetQuestionsByCategoryIdAsync(Guid categoryId);
-        Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId);
-    }
+    Task<IEnumerable<TQuestion>> GetByTestIdAsync(Guid testId);
+    Task<IEnumerable<TQuestion>> GetByCategoryIdAsync(Guid categoryId);
 }

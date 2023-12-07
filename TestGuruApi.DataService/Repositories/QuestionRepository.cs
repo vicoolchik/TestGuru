@@ -6,12 +6,12 @@ using TestGuruApi.Entities.DbSet;
 
 namespace TestGuruApi.DataService.Repositories
 {
-    public class QuestionRepository : GenericRepository<Question>, IQuestionRepository
+    public class QuestionRepository : GenericRepository<Question>
     {
         public QuestionRepository(AppDbContext context, ILogger logger) : base(context, logger)
         {
         }
-        public async Task<IEnumerable<Question>> GetQuestionsByCategoryIdAsync(Guid categoryId)
+        public virtual async Task<IEnumerable<Question>> GetQuestionsByCategoryIdAsync(Guid categoryId)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace TestGuruApi.DataService.Repositories
             }
         }
 
-        public async Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId)
+        public virtual async Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId)
         {
             try
             {

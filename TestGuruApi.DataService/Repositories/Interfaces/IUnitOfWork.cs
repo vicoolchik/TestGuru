@@ -4,7 +4,6 @@
     {
         ITestRepository Tests { get; }
         ICategoryRepository Categories { get; }
-        IQuestionRepository Questions { get; }
         ISingleChoiceQuestionRepository SingleChoiceQuestions { get; }
         IMultipleChoiceQuestionRepository MultipleChoiceQuestions { get; }
         IMatchingQuestionRepository MatchingQuestions { get; }

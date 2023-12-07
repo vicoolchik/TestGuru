@@ -8,8 +8,8 @@ namespace TestGuruApi.TestService.MappingProfiles
     {
         public DomainToResponseProfile()
         {
-            CreateMap<Question, QuestionResponse>()
-                .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
+            CreateMap<SingleChoiceQuestion, SingleChoiceQuestionResponse>()
+                        .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
             CreateMap<Test, TestResponse>();
             CreateMap<Answer, AnswerResponse>();
             CreateMap<Category, CategoryResponse>();

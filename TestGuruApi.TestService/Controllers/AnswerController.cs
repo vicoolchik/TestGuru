@@ -25,7 +25,7 @@ namespace TestGuruApi.Controllers
             return answer != null ? Ok(answer) : NotFound();
         }
 
-        [HttpGet("question/{questionId}")]
+        [HttpGet("Question/{questionId}")]
         public async Task<ActionResult<IEnumerable<AnswerResponse>>> GetAnswersByQuestion(Guid questionId)
         {
             var answers = await _mediator.Send(new GetAnswersByQuestionQuery(questionId));

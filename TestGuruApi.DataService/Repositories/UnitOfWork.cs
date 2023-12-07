@@ -16,7 +16,6 @@ namespace TestGuruApi.DataService.Repositories
 
         public ITestRepository Tests { get; private set; }
         public ICategoryRepository Categories { get; private set; }
-        public IQuestionRepository Questions { get; private set; }
         public ISingleChoiceQuestionRepository SingleChoiceQuestions { get; private set; }
         public IMultipleChoiceQuestionRepository MultipleChoiceQuestions { get; private set; }
         public IMatchingQuestionRepository MatchingQuestions { get; private set; }
@@ -32,7 +31,6 @@ namespace TestGuruApi.DataService.Repositories
 
             Tests = new TestRepository(_context, _logger);
             Categories = new CategoryRepository(_context, _logger);
-            Questions = new QuestionRepository(_context, _logger);
             SingleChoiceQuestions = new SingleChoiceQuestionRepository(_context, _logger);
             MultipleChoiceQuestions = new MultipleChoiceQuestionRepository(_context, _logger);
             MatchingQuestions = new MatchingQuestionRepository(_context, _logger);

@@ -2,11 +2,11 @@
 
 namespace TestGuruApi.TestService.Commands
 {
-    public class DeleteQuestionCommand : IRequest<Unit>
+    public class DeleteSingleChoiceQuestionCommand : IRequest<Unit>
     {
         public Guid Id { get; set; }
 
-        public DeleteQuestionCommand(Guid id)
+        public DeleteSingleChoiceQuestionCommand(Guid id)
         {
             Id = id;
         }

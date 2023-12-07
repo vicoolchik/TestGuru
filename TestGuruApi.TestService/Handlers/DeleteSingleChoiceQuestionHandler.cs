@@ -4,18 +4,18 @@ using TestGuruApi.TestService.Commands;
 
 namespace TestGuruApi.TestService.Handlers
 {
-    public class DeleteQuestionHandler : IRequestHandler<DeleteQuestionCommand, Unit>
+    public class DeleteSingleChoiceQuestionHandler : IRequestHandler<DeleteSingleChoiceQuestionCommand, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteQuestionHandler(IUnitOfWork unitOfWork)
+        public DeleteSingleChoiceQuestionHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(DeleteQuestionCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteSingleChoiceQuestionCommand request, CancellationToken cancellationToken)
         {
-            var success = await _unitOfWork.Questions.Delete(request.Id);
+            var success = await _unitOfWork.SingleChoiceQuestions.Delete(request.Id);
             if (!success)
             {
                 throw new KeyNotFoundException("Question not found");

@@ -25,7 +25,7 @@ namespace TestGuruApi.TestService.Handlers
             }
 
             _mapper.Map(request.AnswerRequest, answer);
-            _unitOfWork.Answers.Update(answer);
+            await _unitOfWork.Answers.Update(answer);
             await _unitOfWork.CompleteAsync();
 
             return Unit.Value;

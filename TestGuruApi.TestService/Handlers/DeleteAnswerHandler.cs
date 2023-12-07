@@ -1,11 +1,9 @@
-﻿namespace TestGuruApi.TestService.Handlers
-{
-    using MediatR;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using TestGuruApi.DataService.Repositories.Interfaces;
-    using TestGuruApi.TestService.Commands;
+﻿using MediatR;
+using TestGuruApi.DataService.Repositories.Interfaces;
+using TestGuruApi.TestService.Commands;
 
+namespace TestGuruApi.TestService.Handlers
+{
     public class DeleteAnswerHandler : IRequestHandler<DeleteAnswerCommand, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;

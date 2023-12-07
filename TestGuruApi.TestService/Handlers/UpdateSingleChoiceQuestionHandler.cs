@@ -5,27 +5,27 @@ using TestGuruApi.TestService.Commands;
 
 namespace TestGuruApi.TestService.Handlers
 {
-    public class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Unit>
+    public class UpdateSingleChoiceQuestionHandler : IRequestHandler<UpdateSingleChoiceQuestionCommand, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateQuestionHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateSingleChoiceQuestionHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateQuestionCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateSingleChoiceQuestionCommand request, CancellationToken cancellationToken)
         {
-            var question = await _unitOfWork.Questions.GetById(request.Id);
+            var question = await _unitOfWork.SingleChoiceQuestions.GetById(request.Id);
             if (question == null)
             {
-                throw new KeyNotFoundException("Question not found.");
+                throw new KeyNotFoundException("Question not found");
             }
 
             _mapper.Map(request.QuestionRequest, question);
-            _unitOfWork.Questions.Update(question);
+            await _unitOfWork.SingleChoiceQuestions.Update(question);
             await _unitOfWork.CompleteAsync();
 
             return Unit.Value;

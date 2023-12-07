@@ -21,7 +21,7 @@ namespace TestGuruApi.TestService.Handlers
         public async Task<AnswerResponse> Handle(CreateAnswerCommand request, CancellationToken cancellationToken)
         {
             var answer = _mapper.Map<Answer>(request.AnswerRequest);
-            _unitOfWork.Answers.Add(answer);
+            await _unitOfWork.Answers.Add(answer);
             await _unitOfWork.CompleteAsync();
 
             return _mapper.Map<AnswerResponse>(answer);

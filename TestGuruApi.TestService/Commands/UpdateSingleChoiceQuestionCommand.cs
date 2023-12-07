@@ -3,12 +3,12 @@ using TestGuruApi.Entities.Dto.Requests;
 
 namespace TestGuruApi.TestService.Commands
 {
-    public class UpdateQuestionCommand : IRequest<Unit>
+    public class UpdateSingleChoiceQuestionCommand : IRequest<Unit>
     {
         public Guid Id { get; set; }
-        public QuestionRequest QuestionRequest { get; set; }
+        public SingleChoiceQuestionRequest QuestionRequest { get; set; }
 
-        public UpdateQuestionCommand(Guid id, QuestionRequest questionRequest)
+        public UpdateSingleChoiceQuestionCommand(Guid id, SingleChoiceQuestionRequest questionRequest)
         {
             Id = id;
             QuestionRequest = questionRequest;

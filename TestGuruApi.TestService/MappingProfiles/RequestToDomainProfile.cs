@@ -8,7 +8,7 @@ namespace TestGuruApi.TestService.MappingProfiles
     {
         public RequestToDomainProfile()
         {
-            CreateMap<QuestionRequest, Question>();
+            CreateMap<SingleChoiceQuestionRequest, SingleChoiceQuestion>();
             CreateMap<TestRequest, Test>();
             CreateMap<AnswerRequest, Answer>();
             CreateMap<CategoryRequest, Category>();

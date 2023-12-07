@@ -3,11 +3,11 @@ using TestGuruApi.Entities.Dto.Responses;
 
 namespace TestGuruApi.TestService.Queries
 {
-    public class GetQuestionsByTestIdQuery : IRequest<IEnumerable<QuestionResponse>>
+    public class GetSingleChoiceQuestionsByTestIdQuery : IRequest<IEnumerable<SingleChoiceQuestionResponse>>
     {
         public Guid TestId { get; set; }
 
-        public GetQuestionsByTestIdQuery(Guid testId)
+        public GetSingleChoiceQuestionsByTestIdQuery(Guid testId)
         {
             TestId = testId;
         }
