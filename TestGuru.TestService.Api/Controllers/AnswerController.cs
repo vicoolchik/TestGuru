@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TestGuru.DAL.Repositories.Interfaces;
 using TestGuru.TestService.Api.Commands;
 using TestGuru.TestService.Api.Queries;
 using TestGuru.TestService.Contracts.Requests;

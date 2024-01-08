@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TestGuru.Domain.Entities;
 
 namespace TestGuru.DAL.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -16,7 +18,14 @@ namespace TestGuru.DAL.Data
         public DbSet<MatchingQuestion> MatchingQuestions { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Answer> Answers { get; set; }
-
+        public DbSet<AccessControlEntry> AccessControlEntries { get; set; }
+        public DbSet<AnswerVisibilityPolicy> AnswerVisibilityPolicies { get; set; }
+        public DbSet<TestAttempt> TestAttempts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<TestTaker> TestTakers { get; set; }
+        public DbSet<Creator> Creators { get; set; }
+        public DbSet<Group> Groups { get; set; }
+         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -56,6 +65,37 @@ namespace TestGuru.DAL.Data
                 .HasOne(t => t.TestCollection)
                 .WithMany(tc => tc.Tests)
                 .HasForeignKey(t => t.TestCollectionId);
+
+
+            //------------------new changes will need to be considered----------------------------------------
+
+            modelBuilder.Entity<TestAttempt>()
+                .HasOne(ta => ta.TestTaker)
+                .WithMany(tt => tt.TestAttempts)
+                .HasForeignKey(ta => ta.TestTakerId);
+
+            modelBuilder.Entity<TestAttempt>()
+                .HasOne(ta => ta.Test)
+                .WithMany(t => t.TestAttempts)
+                .HasForeignKey(ta => ta.TestId);
+
+            modelBuilder.Entity<AccessControlEntry>()
+                .HasOne(ace => ace.Test)
+                .WithMany(t => t.AccessControlEntries)
+                .HasForeignKey(ace => ace.TestId);
+
+            modelBuilder.Entity<Test>()
+                .HasOne(t => t.Creator)
+                .WithMany(c => c.CreatedTests)
+                .HasForeignKey(t => t.CreatorId)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+            modelBuilder.Entity<TestCollection>()
+                .HasOne(tc => tc.Creator)
+                .WithMany(c => c.TestCollections)
+                .HasForeignKey(tc => tc.CreatorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

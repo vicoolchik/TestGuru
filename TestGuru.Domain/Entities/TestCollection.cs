@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestGuru.Domain.Entities
 {
@@ -10,12 +11,12 @@ namespace TestGuru.Domain.Entities
         public string Description { get; set; }
 
         // Foreign key
-        //[Required]
-        //public Guid CreatorId { get; set; }
+        [Required]
+        public Guid CreatorId { get; set; }
 
         // Navigation properties
-        //[ForeignKey("CreatorId")]
-        //public virtual User Creator { get; set; }
+        [ForeignKey(nameof(CreatorId))]
+        public virtual Creator Creator { get; set; }
         public virtual ICollection<Test> Tests { get; set; } = new HashSet<Test>();
     }
 }

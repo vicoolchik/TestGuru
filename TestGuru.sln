@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGuru.Domain", "TestGuru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGuru.TestService.Contracts", "TestGuru.TestService.Contracts\TestGuru.TestService.Contracts.csproj", "{EF601D95-B5FE-4130-86F3-DA44471D6377}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGuru.UserService.Api", "TestGuru.UserService.Api\TestGuru.UserService.Api.csproj", "{C40A7B50-1D20-43E7-AE72-4D2E7D22FB86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGuru.UserService.Contracts", "TestGuru.UserService.Contracts\TestGuru.UserService.Contracts.csproj", "{5D54DD97-9785-4C89-BC3D-B0010C9AEA57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{EF601D95-B5FE-4130-86F3-DA44471D6377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF601D95-B5FE-4130-86F3-DA44471D6377}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF601D95-B5FE-4130-86F3-DA44471D6377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40A7B50-1D20-43E7-AE72-4D2E7D22FB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40A7B50-1D20-43E7-AE72-4D2E7D22FB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40A7B50-1D20-43E7-AE72-4D2E7D22FB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40A7B50-1D20-43E7-AE72-4D2E7D22FB86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D54DD97-9785-4C89-BC3D-B0010C9AEA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D54DD97-9785-4C89-BC3D-B0010C9AEA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D54DD97-9785-4C89-BC3D-B0010C9AEA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D54DD97-9785-4C89-BC3D-B0010C9AEA57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
