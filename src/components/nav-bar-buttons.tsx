@@ -6,8 +6,8 @@ import { LogoutButton } from "./buttons/logout-button";
 
 
 export const NavBarButtons: React.FC = () => {
-  const { isAuthenticated, user, isLoading } = useAuth0();
-  console.log({isAuthenticated, user, isLoading });
+  const { isAuthenticated} = useAuth0();
+
   return (
     <div className="nav-bar__buttons">
       {!isAuthenticated && (

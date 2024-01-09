@@ -18,6 +18,7 @@ import { AuthenticationGuard } from "./components/authentication-guard";
 import NewTest from "./pages/NewTest";
 import { Provider } from "react-redux";
 import store from "./redux";
+import { ProtectedPage } from "./pages/protected-page";
 
 
 function App() {
@@ -43,6 +44,10 @@ function App() {
             <Route path="bookings" element={<Bookings />} />
             <Route path="cabins" element={<Cabins />} />
             <Route path="users" element={<AuthenticationGuard component={Users} />} />
+            <Route
+        path="/protected"
+        element={<AuthenticationGuard component={ProtectedPage} />}
+      />
             <Route path="settings" element={<Settings />} />
             <Route path="account" element={<Account />} />
           </Route>
