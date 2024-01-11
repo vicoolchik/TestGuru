@@ -2,51 +2,66 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using TestGuru.DAL.Data;
 using TestGuru.Domain.Entities;
+using TestGuru.Shared.Services;
+using TestGuru.UserService.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
-// For Identity
 builder.Services.AddIdentity<User, IdentityRole<Guid>>() 
     .AddEntityFrameworkStores<AppDbContext>()
-     .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
     .AddDefaultTokenProviders();
 
-// Adding Authentication
+
+var auth0Domain = builder.Configuration["Auth0:Domain"];
+var auth0Audience = builder.Configuration["Auth0:Audience"];
+var auth0UserInfo = builder.Configuration["Auth0:UserInfoEndpoint"];
+
+string userInfoEndpoint = $"https://{auth0Domain}/{auth0UserInfo}";
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins($"{auth0Audience}")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IUserProvider>(serviceProvider =>
+{
+    var httpClient = serviceProvider.GetRequiredService<HttpClient>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+    return new UserProvider(httpClient, userManager, userInfoEndpoint);
+});
+builder.Services.AddHttpClient();
+
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-
-// Adding Jwt Bearer
-.AddJwtBearer(options =>
-{
-    options.SaveToken = true;
-    options.RequireHttpsMetadata = false;
-    options.TokenValidationParameters = new TokenValidationParameters
+    .AddJwtBearer(options =>
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-        ValidateAudience = true,
-        ValidAudience = builder.Configuration["JWT:ValidAudience"],
-        ClockSkew = TimeSpan.Zero
-    };
-});
+        options.Authority = $"https://{auth0Domain}/";
+        options.Audience = auth0Audience;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true
+        };
+    });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -56,12 +71,13 @@ builder.Services.AddLogging();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

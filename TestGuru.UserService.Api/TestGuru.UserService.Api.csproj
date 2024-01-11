@@ -10,11 +10,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TestGuru.DAL\TestGuru.DAL.csproj" />
+    <ProjectReference Include="..\TestGuru.Shared\TestGuru.Shared.csproj" />
     <ProjectReference Include="..\TestGuru.UserService.Contracts\TestGuru.UserService.Contracts.csproj" />
   </ItemGroup>
 
